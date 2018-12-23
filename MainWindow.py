@@ -9,6 +9,8 @@ def EncFace():
     os.system('python3 EncodeGUI.py')
 def Surveill():
     os.system('python3 Surveillance.py --output output --picamera 1')
+def Visitor():
+    os.system('libreoffice --calc --view dict.csv')
 
 root = Tk()
 frame=Frame(root)
@@ -36,6 +38,8 @@ btn2 = Button(frame,text="Recognition",font=('Comic Sans MS',15),command=RecFace
 btn2.grid(column=5, row=4, sticky=N+S+E+W)
 btn3 = Button(frame,text="Surveillance",font=('Comic Sans MS',15),command=Surveill)
 btn3.grid(column=8, row=4, sticky=N+S+E+W)
+btn4 = Button(frame,text="Visitor Log",font=('Comic Sans MS',15),command=Visitor)
+btn4.grid(column=5, row=2, sticky=N+S+E+W)
 
 
 

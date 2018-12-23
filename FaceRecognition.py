@@ -15,22 +15,28 @@ from predict import predict
 import time
 import datetime
 import tkinter as tk
+import csv
+import os
+import ast
 
 # Get a reference to the Raspberry Pi camera.
 # If this fails, make sure you have a camera connected to the RPi and that you
 # enabled your camera in raspi-config and rebooted first.
 def recognize(imgdata,faceloc):
     GPIO.setwarnings(False)
+    mydict={}
 
     def LabelDisp(finalnames):
         def clear_label():
             #print ("clear_label")
-            label.place_forget()
+            label.grid_forget()
             root2.destroy()
 
         root2 = tk.Toplevel()
         windowWidth = root2.winfo_reqwidth()
         windowHeight = root2.winfo_reqheight()
+        root2.rowconfigure(0, weight=1)        
+        root2.grid_columnconfigure(0, weight=1)
          
         # Gets both half the screen width/height and window width/height
         positionRight = int(root2.winfo_screenwidth()/2 - windowWidth/2)
@@ -38,10 +44,10 @@ def recognize(imgdata,faceloc):
         root2.geometry("+{}+{}".format(positionRight, positionDown))
 
         if(finalnames[0]!="Unknown"):
-            label = tk.Message(root2,text="Welcome "+' '.join(finalnames),font=('Comic Sans MS',14))
+            label = tk.Label(root2,text="Welcome "+'\t'.join(finalnames),font=('Comic Sans MS',14))
         else:
-            label = tk.Message(root2,text="Unknown Faces Detected",font=('Comic Sans MS',14))     
-        label.place(x=0,y=1)
+            label = tk.Label(root2,text="Unknown Faces Detected",font=('Comic Sans MS',14))     
+        label.grid(row=0, column=0,sticky='nsew', padx=5, pady=5)
         label.after(5000, clear_label)    # 1000ms
 
         
@@ -79,9 +85,12 @@ def recognize(imgdata,faceloc):
          st = datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')
          if(name[0]=="unknown"):
              count+=1
+             
          else:
              print("Welcome "+name[0])
              namelist.append(name[0])
+         mydict[name[0]]=st
+         t+=1
              
     '''t+=1
     if(t==10):
@@ -92,8 +101,13 @@ def recognize(imgdata,faceloc):
     else:
          print("Unknown Faces Detected, Try Again")
          namelist.append("Unknown")
+         os.system('cp ./[m]* ./UnknownFaces')
 
     if(namelist!=[]):
+        with open('dict.csv', 'a', newline='') as csv_file:
+            writer=csv.writer(csv_file)
+            for enc in mydict.items():
+                    writer.writerow(enc)
         LabelDisp(namelist)
         time.sleep(10)
         GPIO.output(in1, False)
