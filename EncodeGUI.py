@@ -80,19 +80,24 @@ def EncFace():
         os.system("raspistill -w 320 -h 240 -o ./source/newimg.jpg")
         os.system("python3 FaceCrop.py ./source/newimg.jpg")
         if len(os.listdir('./cropped') ) == 0:
-            pass
+            os.system("rm ./cropped/100.jpg")
+            messagebox.showinfo("Message","No Face Detected")
         else:
             if(os.path.isdir("./knn_examples/train/"+name)):
-                messagebox.showinfo("Message","Face Exists, will append to existing directory")
-                n+=int(len(os.listdir("./knn_examples/train/"+name)))
-                os.system("mv ./cropped/100.jpg ./cropped/"+str(n)+".jpg")
-                os.system("cp ./cropped/"+str(n)+".jpg ./knn_examples/train/"+name)
-                os.system("rm ./cropped/"+str(n)+".jpg")
+                ms=messagebox.askquestion("Message","Face Exists, will append to existing directory, Do you want to Continue?")
+                if(ms=='yes'):
+                    n+=int(len(os.listdir("./knn_examples/train/"+name)))
+                    os.system("mv ./cropped/100.jpg ./cropped/"+str(n)+".jpg")
+                    os.system("cp ./cropped/"+str(n)+".jpg ./knn_examples/train/"+name)
+                    os.system("rm ./cropped/"+str(n)+".jpg")
+                    progress()
+                if(ms=='no'):
+                    pass
             else:
                 os.system("mkdir knn_examples/train/"+name)
                 os.system("cp ./cropped/100.jpg ./knn_examples/train/"+name)
                 os.system("rm ./cropped/100.jpg")
-            progress()
+                progress()
     else:
         messagebox.showerror("Error","Please Enter a Valid Name")
     

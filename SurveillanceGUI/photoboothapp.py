@@ -29,7 +29,7 @@ class PhotoBoothApp:
 		# create a button, that when pressed, will take the current
 		# frame and save it to file
 		btn = tki.Button(self.root, text="Back",
-			command=self.takeSnapshot)
+			command=self.onClose)
 		btn.pack(side="bottom", fill="both", expand="yes", padx=10,
 			pady=10)
 
@@ -81,7 +81,7 @@ class PhotoBoothApp:
 		# grab the current timestamp and use it to construct the
 		# output path
 		#self.onClose()
-		sys.exit(0)
+		#sys.exit(0)
 		'''ts = datetime.datetime.now()
 		filename = "{}.jpg".format(ts.strftime("%Y-%m-%d_%H-%M-%S"))
 		p = os.path.sep.join((self.outputPath, filename))

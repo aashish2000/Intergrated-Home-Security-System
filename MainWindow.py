@@ -1,10 +1,12 @@
 from tkinter import *
 import os
+import sys
 
 def RecFace():
     #os.system('python3 RecognitionGUI.py')
     os.system('python3 RecognitionGUI.py')
-        
+def Exit():
+    sys.exit(0)
 def EncFace():
     os.system('python3 EncodeGUI.py')
 def Surveill():
@@ -25,21 +27,24 @@ grid.grid(sticky=N+S+E+W, column=0, row=7)
 Grid.rowconfigure(frame, 7, weight=1)
 Grid.columnconfigure(frame, 0, weight=1)
 
-Label(frame, text="Intergrated Face Recognition System: ",font=('Comic Sans MS',20),borderwidth=1, relief="solid").grid(row=0,column=0,columnspan=10,
+Label(frame, text="Intergrated Face Recognition System: ",font=('Calibri',20),borderwidth=1, relief="solid").grid(row=0,column=0,columnspan=10,
                rowspan=2,sticky=W+E+N+S, padx=5, pady=5)
 #example values
 '''for x in range(10):
     for y in range(5):
         btn = Button(frame)
         btn.grid(column=x, row=y, sticky=N+S+E+W)'''
-btn1 = Button(frame,text="Encode Face",font=('Comic Sans MS',15),command=EncFace)
-btn1.grid(column=2, row=4, sticky=N+S+E+W)
-btn2 = Button(frame,text="Recognition",font=('Comic Sans MS',15),command=RecFace)
-btn2.grid(column=5, row=4, sticky=N+S+E+W)
-btn3 = Button(frame,text="Surveillance",font=('Comic Sans MS',15),command=Surveill)
-btn3.grid(column=8, row=4, sticky=N+S+E+W)
-btn4 = Button(frame,text="Visitor Log",font=('Comic Sans MS',15),command=Visitor)
-btn4.grid(column=5, row=2, sticky=N+S+E+W)
+btn1 = Button(frame,text="Encode Face",font=('Calibri',17),command=EncFace)
+btn1.grid(column=2, row=3, sticky=N+S+E+W)
+btn2 = Button(frame,text="Recognition",font=('Calibri',17),command=RecFace)
+btn2.grid(column=5, row=2, sticky=N+S+E+W)
+btn3 = Button(frame,text="Surveillance",font=('Calibri',17),command=Surveill)
+btn3.grid(column=8, row=3, sticky=N+S+E+W)
+btn4 = Button(frame,text="Visitor Log",font=('Calibri',17),command=Visitor)
+btn4.grid(column=5, row=4, sticky=N+S+E+W)
+btn5 = Button(frame,text="Exit",font=('Calibri',17),command=Exit)
+btn5.grid(column=9, row=5, sticky=N+S+E+W)
+
 
 
 

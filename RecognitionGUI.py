@@ -29,9 +29,9 @@ if __name__ == '__main__':
     grid.grid(sticky='nsew', column=0, row=7)
     Tkinter.Grid.rowconfigure(frame, 7, weight=1)
     Tkinter.Grid.columnconfigure(frame, 0, weight=1)
-    console = Tkinter.Button(frame,text="Back",font=('Comic Sans MS',15),command=kill)
-    console.grid(row=4,column=5,sticky='nsew')
-    Tkinter.Label(frame, text="Stand in front of the camera",font=('Comic Sans MS',20),borderwidth=1, relief="solid").grid(row=2,column=2,columnspan=6,
+    console = Tkinter.Button(frame,text="Back",font=('Calibri',15),command=kill)
+    console.grid(row=4,column=8,sticky='nsew')
+    Tkinter.Label(frame, text="Please stand in front of the camera...",font=('Calibri',12)).grid(row=4,column=3,columnspan=4,
                    rowspan=1,sticky='nsew', padx=5, pady=5)
 
     for x in range(10):
@@ -40,7 +40,7 @@ if __name__ == '__main__':
     for y in range(5):
         Tkinter.Grid.rowconfigure(frame, y, weight=1)
 
-    Tkinter.Label(frame, text="Recognition Mode",font=('Comic Sans MS',20),borderwidth=1, relief="solid").grid(row=0,column=0,columnspan=10,
+    Tkinter.Label(frame, text="Recognition Mode",font=('Calibri',20),borderwidth=1, relief="solid").grid(row=0,column=0,columnspan=10,
                    rowspan=1,sticky='nsew', padx=5, pady=5)
     root.mainloop()
 

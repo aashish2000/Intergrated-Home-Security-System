@@ -33,6 +33,7 @@ def recognize(imgdata,faceloc):
             root2.destroy()
 
         root2 = tk.Toplevel()
+        root2.title("  ")
         windowWidth = root2.winfo_reqwidth()
         windowHeight = root2.winfo_reqheight()
         root2.rowconfigure(0, weight=1)        
@@ -44,11 +45,11 @@ def recognize(imgdata,faceloc):
         root2.geometry("+{}+{}".format(positionRight, positionDown))
 
         if(finalnames[0]!="Unknown"):
-            label = tk.Label(root2,text="Welcome "+'\t'.join(finalnames),font=('Comic Sans MS',14))
+            label = tk.Label(root2,text="Welcome "+','.join(finalnames),font=('Calibri',18))
         else:
-            label = tk.Label(root2,text="Unknown Faces Detected",font=('Comic Sans MS',14))     
+            label = tk.Label(root2,text="Unknown Faces Detected",font=('Calibri',18))     
         label.grid(row=0, column=0,sticky='nsew', padx=5, pady=5)
-        label.after(5000, clear_label)    # 1000ms
+        label.after(10000, clear_label)    # 1000ms
 
         
     namelist=[]
