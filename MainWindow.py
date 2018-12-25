@@ -1,6 +1,18 @@
 from tkinter import *
+from tkinter import messagebox
+import time
+import datetime
 import os
 import sys
+import csv
+import ast
+import RPi.GPIO as GPIO
+import glob
+import picamera
+from FaceDetection import detect
+
+
+camera=picamera.PiCamera()
 
 def RecFace():
     #os.system('python3 RecognitionGUI.py')
@@ -13,6 +25,41 @@ def Surveill():
     os.system('python3 Surveillance.py --output output --picamera 1')
 def Visitor():
     os.system('libreoffice --calc --view dict.csv')
+def Override():
+    GPIO.setwarnings(False)
+    mydict={}
+    camera.resolution=(320,240)
+    now = datetime.datetime.now()
+    filename = 'motion-%04d%02d%02d-%02d%02d%02d.jpg' % (now.year, now.month,now.day, now.hour,now.minute, now.second)
+    camera.capture(filename)
+    st = now.strftime('%Y-%m-%d %H:%M:%S')
+    im,loc,num=detect(filename)
+    if(num>0):
+        val=messagebox.askquestion(" ","Face Detected, Unlock now?")
+        if(val=='yes'):
+            mydict["Manual Override"]=st
+            os.system("mv ./[m]* ./OverrideFaces")
+            in1 = 16
+            GPIO.setmode(GPIO.BOARD)
+            GPIO.setup(in1, GPIO.OUT)
+            GPIO.output(in1, True)
+            time.sleep(10)
+            GPIO.output(in1, False)
+            messagebox.showinfo(" ","Entry Authorized")
+        else:
+            mydict["Unauthorized"]=st            
+            messagebox.showinfo(" ","Entry Unauthorized")
+            os.system("mv ./[o]* ./OverrideFaces")
+        with open('/home/pi/Desktop/Intergrated-Home-Security-System/dict.csv', 'a', newline='') as csv_file:
+            writer=csv.writer(csv_file)
+            for enc in mydict.items():
+                    writer.writerow(enc)
+    else:
+        messagebox.showinfo(" ","No faces Detected")
+
+    for filename in glob.glob("motion*"):
+        os.remove(filename)
+        
 
 root = Tk()
 frame=Frame(root)
@@ -44,7 +91,8 @@ btn4 = Button(frame,text="Visitor Log",font=('Calibri',17),command=Visitor)
 btn4.grid(column=5, row=4, sticky=N+S+E+W)
 btn5 = Button(frame,text="Exit",font=('Calibri',17),command=Exit)
 btn5.grid(column=9, row=5, sticky=N+S+E+W)
-
+btn6 = Button(frame,text="Manual Override",font=('Calibri',17),command=Override)
+btn6.grid(column=0, row=5, sticky=N+S+E+W)
 
 
 
