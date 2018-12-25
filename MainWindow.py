@@ -82,16 +82,16 @@ Label(frame, text="Intergrated Face Recognition System: ",font=('Calibri',20),bo
         btn = Button(frame)
         btn.grid(column=x, row=y, sticky=N+S+E+W)'''
 btn1 = Button(frame,text="Encode Face",font=('Calibri',17),command=EncFace)
-btn1.grid(column=2, row=3, sticky=N+S+E+W)
+btn1.grid(column=1, row=3, sticky=N+S+E+W)
 btn2 = Button(frame,text="Recognition",font=('Calibri',17),command=RecFace)
-btn2.grid(column=5, row=2, sticky=N+S+E+W)
+btn2.grid(column=4, row=2, sticky=N+S+E+W)
 btn3 = Button(frame,text="Surveillance",font=('Calibri',17),command=Surveill)
-btn3.grid(column=8, row=3, sticky=N+S+E+W)
+btn3.grid(column=7, row=3, sticky=N+S+E+W)
 btn4 = Button(frame,text="Visitor Log",font=('Calibri',17),command=Visitor)
-btn4.grid(column=5, row=4, sticky=N+S+E+W)
+btn4.grid(column=4, row=4, sticky=N+S+E+W)
 btn5 = Button(frame,text="Exit",font=('Calibri',17),command=Exit)
 btn5.grid(column=9, row=5, sticky=N+S+E+W)
-btn6 = Button(frame,text="Manual Override",font=('Calibri',17),command=Override)
+btn6 = Button(frame,text="Manual \nOverride",font=('Calibri',17),command=Override)
 btn6.grid(column=0, row=5, sticky=N+S+E+W)
 
 
