@@ -11,9 +11,6 @@ import glob
 import picamera
 from FaceDetection import detect
 
-
-camera=picamera.PiCamera()
-
 def RecFace():
     #os.system('python3 RecognitionGUI.py')
     os.system('python3 RecognitionGUI.py')
@@ -26,12 +23,14 @@ def Surveill():
 def Visitor():
     os.system('libreoffice --calc --view dict.csv')
 def Override():
+    camera=picamera.PiCamera()
     GPIO.setwarnings(False)
     mydict={}
     camera.resolution=(320,240)
     now = datetime.datetime.now()
     filename = 'motion-%04d%02d%02d-%02d%02d%02d.jpg' % (now.year, now.month,now.day, now.hour,now.minute, now.second)
     camera.capture(filename)
+    camera.close()
     st = now.strftime('%Y-%m-%d %H:%M:%S')
     im,loc,num=detect(filename)
     if(num>0):
@@ -50,7 +49,7 @@ def Override():
             mydict["Unauthorized"]=st            
             messagebox.showinfo(" ","Entry Unauthorized")
             os.system("mv ./[o]* ./OverrideFaces")
-        with open('/home/pi/Desktop/Intergrated-Home-Security-System/dict.csv', 'a', newline='') as csv_file:
+        with open('./dict.csv', 'a', newline='') as csv_file:
             writer=csv.writer(csv_file)
             for enc in mydict.items():
                     writer.writerow(enc)
