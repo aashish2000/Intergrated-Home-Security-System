@@ -73,7 +73,7 @@ grid.grid(sticky=N+S+E+W, column=0, row=7)
 Grid.rowconfigure(frame, 7, weight=1)
 Grid.columnconfigure(frame, 0, weight=1)
 
-Label(frame, text="Intergrated Face Recognition System: ",font=('Calibri',20),borderwidth=1, relief="solid").grid(row=0,column=0,columnspan=10,
+Label(frame, text="Intergrated Home Security System ",font=('Calibri',20),borderwidth=1, relief="solid").grid(row=0,column=0,columnspan=10,
                rowspan=2,sticky=W+E+N+S, padx=5, pady=5)
 #example values
 '''for x in range(10):
