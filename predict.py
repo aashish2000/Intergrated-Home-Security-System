@@ -30,14 +30,6 @@ def predict(X_img, faceloc, knn_clf=None, model_path=None, distance_threshold=0.
         with open(model_path, 'rb') as f:
             knn_clf = pickle.load(f)
 
-    # Load image file and find face locations
-
-    '''X_face_locations = face_recognition.face_locations(X_img)
-
-    # If no faces are found in the image, return an empty result.
-    if len(X_face_locations) == 0:
-        return []'''
-
     # Find encodings for faces in the test iamge
     faces_encodings = face_recognition.face_encodings(X_img, known_face_locations=faceloc)
 

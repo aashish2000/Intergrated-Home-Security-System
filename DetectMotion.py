@@ -9,15 +9,14 @@ import PIL.Image
 from FaceDetection import detect
 from FaceRecognition import recognize
 import tkinter as tk
-#from tkinter import messagebox
-def motiondet(camera):
+
+# Evaluates if motion is present to start the recognition process
+def evaluate_picture(camera):
     for filename in glob.glob("motion*"):
         os.remove(filename)
 
-    #camera = picamera.PiCamera()
-
     difference = 20
-    pixels = 100
+    pixel_threshold = 100
 
     width = 320
     height = 240
@@ -32,10 +31,11 @@ def motiondet(camera):
         buffer = im.load()
         stream.close()
         return im, buffer
-    def newimage(width, height,oldfile):
+
+    def capture_face_image(width, height,path_to_img):
         time = datetime.now()
-        if os.path.exists(oldfile):
-            os.remove(oldfile)
+        if os.path.exists(path_to_img):
+            os.remove(path_to_img)
         filename = 'motion-%04d%02d%02d-%02d%02d%02d.jpg' % (time.year, time.month,time.day, time.hour,time.minute, time.second)
         camera.resolution = (width, height)
         camera.capture(filename)
@@ -45,26 +45,33 @@ def motiondet(camera):
     image1, buffer1 = compare()
 
     timestamp = time.time()
-    oldfile=''
+    path_to_img=''
     finalnames=[]
 
     while (True):
         image2, buffer2 = compare()
-
+        '''
+        Motion detection is calculated by calculating the difference in pixel_threshold between
+        consecutive frames to identify movemement.
+        '''
         changedpixels = 0
         for x in range(0, 100):
             for y in range(0, 75):
                 pixdiff = abs(buffer1[x,y][1]- buffer2[x,y][1])
                 if pixdiff > difference:        
                     changedpixels += 1
-        if changedpixels > pixels:
+        
+        # Check if pixel difference is grater than threshold 
+        if changedpixels > pixel_threshold:
             timestamp = time.time()
-            oldfile=newimage(width, height,oldfile)
-            imgdata,faceloc,n=detect(oldfile)
-            if(n>0):
+            path_to_img=capture_face_image(width, height,path_to_img)
+
+            # Run face decection 
+            detected_image,detected_face_coords,no_detected_faces=detect(path_to_img)
+            if(no_detected_faces>0):
                 image1 = image2
                 buffer1 = buffer2
-                recognize(imgdata,faceloc)
+                recognize(detected_image,detected_face_coords)
         image1 = image2
         buffer1 = buffer2
 

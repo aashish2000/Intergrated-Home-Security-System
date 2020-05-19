@@ -7,7 +7,8 @@ import random
 import picamera
 import sys
 import RPi.GPIO as GPIO
-from DetectMotion import motiondet
+from DetectMotion import evaluate_picture
+
 def kill():
     GPIO.output(16, False)
     for filename in glob.glob("motion*"):
@@ -16,11 +17,18 @@ def kill():
 
 def threadmain():
     camera = picamera.PiCamera()
-    motiondet(camera)
+    evaluate_picture(camera)
+
+
 if __name__ == '__main__':
+    # Multi Threading is used to run the face recognition backend separately from the GUI
     _thread.start_new_thread(threadmain, ())
+
+    # Declare Tkinter Root widget and child Frame widget
     root = Tkinter.Tk()
     frame=Tkinter.Frame(root)
+
+    # Set dimensions and orientation of window
     root.attributes("-fullscreen",True)
     Tkinter.Grid.rowconfigure(root, 0, weight=1)
     Tkinter.Grid.columnconfigure(root, 0, weight=1)
@@ -29,6 +37,8 @@ if __name__ == '__main__':
     grid.grid(sticky='nsew', column=0, row=7)
     Tkinter.Grid.rowconfigure(frame, 7, weight=1)
     Tkinter.Grid.columnconfigure(frame, 0, weight=1)
+
+    # Declare label and button widgets
     console = Tkinter.Button(frame,text="Back",font=('Calibri',15),command=kill)
     console.grid(row=4,column=8,sticky='nsew')
     Tkinter.Label(frame, text="Please stand in front of the camera...",font=('Calibri',12)).grid(row=4,column=3,columnspan=4,

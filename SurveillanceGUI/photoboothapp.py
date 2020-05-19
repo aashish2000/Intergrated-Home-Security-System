@@ -1,4 +1,3 @@
-# import the necessary packages
 from __future__ import print_function
 from PIL import Image
 from PIL import ImageTk
@@ -44,10 +43,6 @@ class PhotoBoothApp:
 		self.root.wm_protocol("WM_DELETE_WINDOW", self.onClose)
 
 	def videoLoop(self):
-		# DISCLAIMER:
-		# I'm not a GUI developer, nor do I even pretend to be. This
-		# try/except statement is a pretty ugly hack to get around
-		# a RunTime error that Tkinter throws due to threading
 		try:
 			# keep looping over frames until we are instructed to stop
 			while not self.stopEvent.is_set():
@@ -76,19 +71,7 @@ class PhotoBoothApp:
 
 		except(RuntimeError, e):
 			print("[INFO] caught a RuntimeError")
-
-	def takeSnapshot(self):
-		# grab the current timestamp and use it to construct the
-		# output path
-		#self.onClose()
-		#sys.exit(0)
-		'''ts = datetime.datetime.now()
-		filename = "{}.jpg".format(ts.strftime("%Y-%m-%d_%H-%M-%S"))
-		p = os.path.sep.join((self.outputPath, filename))
-
-		# save the file
-		cv2.imwrite(p, self.frame.copy())
-		print("[INFO] saved {}".format(filename))'''
+		
 
 	def onClose(self):
 		# set the stop event, cleanup the camera, and allow the rest of

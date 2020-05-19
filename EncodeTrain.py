@@ -74,6 +74,5 @@ def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo='auto', ve
 
 print("Training KNN classifier...")
 classifier = train("knn_examples/train", model_save_path="trained_knn_model.clf", n_neighbors=2)
-print("Training complete!")
 
 print("Model trained Successfully")
