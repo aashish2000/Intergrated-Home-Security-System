@@ -75,21 +75,21 @@ def EncFace():
 
         else:
             # Check if person already present in the system
-            if(os.path.isdir("./knn_examples/train/"+name)):
+            if(os.path.isdir("./Faces_train_dir/train/"+name)):
                 ms=messagebox.askquestion("Message","Face Exists, will append to existing directory, Do you want to Continue?")
 
                 # Place photo in person's directory
                 if(ms=='yes'):
-                    images_count+=int(len(os.listdir("./knn_examples/train/"+name)))
+                    images_count+=int(len(os.listdir("./Faces_train_dir/train/"+name)))
                     os.system("mv ./cropped/100.jpg ./cropped/"+str(images_count)+".jpg")
-                    os.system("cp ./cropped/"+str(images_count)+".jpg ./knn_examples/train/"+name)
+                    os.system("cp ./cropped/"+str(images_count)+".jpg ./Faces_train_dir/train/"+name)
                     os.system("rm ./cropped/"+str(images_count)+".jpg")
                     progress()
                 if(ms=='no'):
                     pass
             else:
-                os.system("mkdir knn_examples/train/"+name)
-                os.system("cp ./cropped/100.jpg ./knn_examples/train/"+name)
+                os.system("mkdir Faces_train_dir/train/"+name)
+                os.system("cp ./cropped/100.jpg ./Faces_train_dir/train/"+name)
                 os.system("rm ./cropped/100.jpg")
                 progress()
     else:

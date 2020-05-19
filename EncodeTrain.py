@@ -73,6 +73,6 @@ def train(train_dir, model_save_path=None, n_neighbors=None, knn_algo='auto', ve
             pickle.dump(knn_clf, f)
 
 print("Training KNN classifier...")
-classifier = train("knn_examples/train", model_save_path="trained_knn_model.clf", n_neighbors=2)
+classifier = train("Faces_train_dir/train", model_save_path="trained_knn_model.clf", n_neighbors=2)
 
 print("Model trained Successfully")
